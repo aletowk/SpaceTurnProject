@@ -10,8 +10,11 @@ public class PlayerManager : MonoBehaviour
     public List<CStar> m_playerStarList;
     public List<CColony> m_playerColonyList;
 
+    public List<GameObject> m_playerStarsIconList;
 
     public Canvas m_playerColonyCanva;
+
+    public bool oneIconNotActive;
 
     void OnEnable()
     {
@@ -23,6 +26,7 @@ public class PlayerManager : MonoBehaviour
     {
         m_playerStarList = new List<CStar>();
         m_playerColonyList = new List<CColony>();
+        m_playerStarsIconList = new List<GameObject>();
         m_playerColonyCanva.gameObject.SetActive(false);
     }
 
@@ -31,7 +35,6 @@ public class PlayerManager : MonoBehaviour
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new RaycastHit();
-
         if (Physics.Raycast(mouseRay, out hit))
         {
             if (Input.GetMouseButtonDown(0))
@@ -52,6 +55,24 @@ public class PlayerManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
                 m_playerColonyCanva.gameObject.SetActive(false);
+        }
+        // Pas optimal du tout !!!!!
+        if(!SolarSystemManager.m_solarSystemInstance.solarSystemViewActive)
+        {
+            if(oneIconNotActive == true)
+            {
+                for(int i = 0; i < m_playerStarsIconList.Count;i++)
+                {
+                    m_playerStarsIconList[i].SetActive(true);
+                }
+                oneIconNotActive = false;
+            }
+        }else
+        {
+            for(int i = 0; i < m_playerStarsIconList.Count;i++)
+            {
+                m_playerStarsIconList[i].SetActive(false);
+            }
         }
     }
 

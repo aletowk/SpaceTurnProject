@@ -164,8 +164,12 @@ public class GalaxyManager : MonoBehaviour
         PlayerManager.playerInstance.m_playerColonyList.Add(startColony);
 
         GameObject instance = Instantiate(Resources.Load(Constantes.prefab_selection_circle_name)) as GameObject;
+        instance.transform.SetParent(PlayerManager.playerInstance.gameObject.transform);
         instance.transform.localScale *= 2f;
         instance.transform.position = star.m_starPosition;
+        instance.SetActive(false);// done in player manager
+        PlayerManager.playerInstance.oneIconNotActive = true;
+        PlayerManager.playerInstance.m_playerStarsIconList.Add(instance);
     }
 
     public CStar returnStarFromGameobject(GameObject go)

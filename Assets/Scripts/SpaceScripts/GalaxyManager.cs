@@ -17,7 +17,7 @@ public class GalaxyManager : MonoBehaviour
     public float minDistanceBetweenStars;
     public float minimalDistanceFromCenter;
     public float galaxyRadius;
-    public int m_galaxySeedNumber;
+    public int  m_galaxySeedNumber;
 
     public static GalaxyManager galaxyInstance;
 
@@ -105,7 +105,7 @@ public class GalaxyManager : MonoBehaviour
         CStar tmpStar;
         if(m_galaxySeedNumber != 0)
             UnityEngine.Random.InitState(m_galaxySeedNumber);
-
+        //m_galaxySeedNumber = UnityEngine.Random;
         for (int i = 0; i < numberOfStars; i++)
         {
             randomType = (int)Mathf.Round(UnityEngine.Random.Range(0, (float)E_StarType.E_STAR_TYPE_NB - 0.55f));

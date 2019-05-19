@@ -114,7 +114,7 @@ public class PlayerManager : MonoBehaviour
                                 // todo
                                 m_playerColonyInfos.gameObject.SetActive(false);
                                 m_colonyManagerImage.gameObject.SetActive(true);
-                                UpdateColonyManagerImage(planet.m_colony);
+                                UIColonyManager.uiColonyManagerInstance.ShowColonyManager(planet.m_colony);
                                 Debug.Log("Entering in colony management scene");
                             }
                         }
@@ -142,7 +142,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    void UpdateColonyInfoInSolarSystemView(CColony clickedColony)
+    public void UpdateColonyInfoInSolarSystemView(CColony clickedColony)
     {
         Text[] colonyInfoTxt = m_playerColonyInfos.GetComponentsInChildren<Text>();
         for (int index = 0; index < colonyInfoTxt.Length; index++)
@@ -157,7 +157,7 @@ public class PlayerManager : MonoBehaviour
 
                 for (int i = 0; i < clickedColony.m_buildingList.Count;i++)
                 {
-                    colonyInfoTxt[index].text += "Building : " + clickedColony.m_buildingList[i]+ "\n";
+                    colonyInfoTxt[index].text += "Building : " + clickedColony.m_buildingList[i].m_buildingType + "\n";
                 }
                 break;
             }
@@ -174,22 +174,7 @@ public class PlayerManager : MonoBehaviour
         }
         return null;
     }
-    void UpdateColonyManagerImage(CColony colony)
-    {
-        Image[] imgTab = m_colonyManagerImage.GetComponentsInChildren<Image>();
-        Image planetInfoImage = returnPlanetInfo(imgTab);
-        
-        Text[] texts = planetInfoImage.GetComponentsInChildren<Text>();
-        for(int i = 0; i < texts.Length;i++ )
-        {
-            if (texts[i].name == "NameText")
-                texts[i].text = colony.m_parentPlanet.m_planetName;
-            else if (texts[i].name == "TypeText")
-                texts[i].text = colony.m_parentPlanet.m_planetType.ToString();
-            else if (texts[i].name == "PlanetResourcesText")
-                texts[i].text = colony.m_parentPlanet.m_planetResources.ToString();
-        }
-    }
+    
 
 
 }

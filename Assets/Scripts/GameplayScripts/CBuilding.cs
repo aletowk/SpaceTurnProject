@@ -22,7 +22,7 @@ public class CBuilding
 
     public CBuilding(E_BUILDING_TYPES buildType)
     {
-
+        m_buildingType = buildType;
     }
     
 

@@ -30,6 +30,14 @@ public class CResources
         m_hydrogenAmount = 150;
         m_uraniumAmount = 0;
     }
+    public void InitColony()
+    {
+        m_foodAmount = 10;
+        m_metalAmount = 10;
+        m_hydrogenAmount = 10;
+        m_uraniumAmount = 10;
+    }
+
     public override string  ToString()
     {
         string toRet;

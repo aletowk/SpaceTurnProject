@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CColony 
 {
     public List<CBuilding> m_buildingList;
     public CPlanet m_parentPlanet;
 
-
+    public CResources m_planetResources; 
 
     public CColony(CPlanet parent)
     {

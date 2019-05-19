@@ -48,28 +48,30 @@ public class GalaxyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit = new RaycastHit();
 
-        if(!SolarSystemManager.m_solarSystemInstance.solarSystemViewActive)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(mouseRay, out hit))
+            if (!SolarSystemManager.m_solarSystemInstance.solarSystemViewActive)
             {
-                MoveSelectionIcon(hit);
-                if (Input.GetMouseButtonDown(0))
+                Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit = new RaycastHit();
+                if (Physics.Raycast(mouseRay, out hit))
                 {
-                    CStar m_star = returnStarFromGameobject(hit.transform.gameObject);
-                    infoText.text = "Selected Star     : \n" +
-                                    "Star Name         : " + m_star.m_starName + "\n" +
-                                    "Star Type         : " + m_star.m_starType + "\n" +
-                                    "Position          : " + m_star.m_starPosition + "\n" +
-                                    "Number of planets : " + m_star.m_planetNumber + "\n";
+                    MoveSelectionIcon(hit);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        CStar m_star = returnStarFromGameobject(hit.transform.gameObject);
+                        infoText.text = "Selected Star     : \n" +
+                                        "Star Name         : " + m_star.m_starName + "\n" +
+                                        "Star Type         : " + m_star.m_starType + "\n" +
+                                        "Position          : " + m_star.m_starPosition + "\n" +
+                                        "Number of planets : " + m_star.m_planetNumber + "\n";
+                    }
                 }
+                else
+                    selectionIcon.SetActive(false);
             }
-            else
-                selectionIcon.SetActive(false);
-        }
-        
+        }       
     }
 
     void InitGalaxy()
@@ -103,7 +105,7 @@ public class GalaxyManager : MonoBehaviour
         CStar tmpStar;
         if(m_galaxySeedNumber != 0)
             UnityEngine.Random.InitState(m_galaxySeedNumber);
-        //Debug.Log("Computing creation of " + numberOfStars + " stars.......");
+
         for (int i = 0; i < numberOfStars; i++)
         {
             randomType = (int)Mathf.Round(UnityEngine.Random.Range(0, (float)E_StarType.E_STAR_TYPE_NB - 0.55f));
@@ -132,13 +134,10 @@ public class GalaxyManager : MonoBehaviour
 
                 starToGameObject.Add(tmpStar, instance);
                 listOfStars.Add(tmpStar);
-                //Debug.Log("New star created :");
-                //tmpStar.PrintStarInfo();
                 failCount = 0;
             }
             else
             {
-                Debug.Log("Star " + i.ToString() + " Radius of Spheres : " + minDistanceBetweenStars+10f);
                 failCount++;
                 i--;
             }
@@ -149,19 +148,57 @@ public class GalaxyManager : MonoBehaviour
             }
         }
     }
-
+    private int returnStarIndexContainingLushPlanet()
+    {
+        for (int i = 0; i < listOfStars.Count; i++)
+        {
+            for (int tmp = 0; tmp < listOfStars[i].m_planetNumber; tmp++)
+            {
+                if (listOfStars[i].m_planetList[tmp].m_planetType == E_PLANET_TYPE.E_LUSH)
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+    private int returnLushPlanetIndex(int starIndexInList)
+    {
+        for(int i = 0; i < listOfStars[starIndexInList].m_planetNumber;i++ )
+        {
+            if (listOfStars[starIndexInList].m_planetList[i].m_planetType == E_PLANET_TYPE.E_LUSH)
+                return i;
+        }
+        return -1;
+    }
     private void SelectPlayerStar()
     {
-        int selectedStar = Mathf.FloorToInt(UnityEngine.Random.Range(0, listOfStars.Count));
+        int selectedStar,selectedPlanet;
+
+        selectedStar = returnStarIndexContainingLushPlanet();
+        if (selectedStar == -1)
+        {
+            Debug.Log("Alert, impossible to find star with lush planet !");
+            return;
+        }
+
+        selectedPlanet = returnLushPlanetIndex(selectedStar);
+        if (selectedPlanet == -1)
+        {
+            Debug.Log("Alert impossible to find lush planet in star " + selectedStar);
+            return;
+        }
+
         CStar star = listOfStars[selectedStar];
         star.m_parentFaction = E_FACTION.E_PLAYER;
 
         PlayerManager.playerInstance.m_playerStarList.Add(star);
 
-        CPlanet selectStartPlanet = star.m_planetList[Mathf.FloorToInt(UnityEngine.Random.Range(0, star.m_planetNumber))];
+        CPlanet selectStartPlanet = star.m_planetList[selectedPlanet];
         CColony startColony = new CColony(selectStartPlanet);
 
         PlayerManager.playerInstance.m_playerColonyList.Add(startColony);
+        selectStartPlanet.m_colony = startColony;
 
         GameObject instance = Instantiate(Resources.Load(Constantes.prefab_selection_circle_name)) as GameObject;
         instance.transform.SetParent(PlayerManager.playerInstance.gameObject.transform);
@@ -194,6 +231,11 @@ public class GalaxyManager : MonoBehaviour
 
             starToGameObject[tmpStar] = instance;
         }
+        //Update player stars icons
+        for (int i = 0; i < PlayerManager.playerInstance.m_playerStarsIconList.Count; i++)
+        {
+            PlayerManager.playerInstance.m_playerStarsIconList[i].SetActive(true);
+        }
         resetGalaxyButton.gameObject.SetActive(false);
         destroyGalaxyButton.gameObject.SetActive(true);
     }
@@ -206,7 +248,13 @@ public class GalaxyManager : MonoBehaviour
             go.SetParent(null);
             Destroy(go.gameObject);
         }
+        //Update player stars icons
+        for (int i = 0; i < PlayerManager.playerInstance.m_playerStarsIconList.Count; i++)
+        {
+            PlayerManager.playerInstance.m_playerStarsIconList[i].SetActive(false);
+        }
         resetGalaxyButton.gameObject.SetActive(true);
         destroyGalaxyButton.gameObject.SetActive(false);
+
     }
 }

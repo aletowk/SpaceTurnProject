@@ -31,10 +31,11 @@ public class SolarSystemManager : MonoBehaviour
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new RaycastHit();
-        if (Physics.Raycast(mouseRay, out hit))
+        if (Physics.Raycast(mouseRay, out hit) )
         {
             GalaxyManager.galaxyInstance.MoveSelectionIcon(hit);
-            if (Input.GetMouseButtonDown(1))
+            // Entering from galaxy view to solar system view 
+            if (Input.GetMouseButtonDown(1) && !solarSystemViewActive)
             {
                 m_star = GalaxyManager.galaxyInstance.returnStarFromGameobject(hit.transform.gameObject);
                 if (m_star != null)
@@ -52,8 +53,7 @@ public class SolarSystemManager : MonoBehaviour
                     infoText.text = "Selected Planet     : \n" +
                                     "Planet Name         : " + planet.m_planetName + "\n" +
                                     "Planet Type         : " + planet.m_planetType + "\n" +
-                                    "Position            : " + planet.m_planetPosition.ToString() + "\n" +
-                                    "Resources : " + 0 + "\n";
+                                    "Position            : " + planet.m_planetPosition.ToString() + "\n";
                 }
                 else if(m_centralStarToGameObject.Values.ToList().IndexOf(hit.transform.gameObject) != -1)
                 {

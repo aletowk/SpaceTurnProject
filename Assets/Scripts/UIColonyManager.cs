@@ -106,7 +106,24 @@ public class UIColonyManager : MonoBehaviour
             UpdateBuildingList();
             UpdateColonyResourcesImage();
         }
-        
+    }
+    public void ConstructMine()
+    {
+        bool check;
+        check = currentPlanet.m_colony.CheckResourcesToConstruct(E_BUILDING_TYPES.E_MINE);
+        if (!check)
+        {
+            AlertImage.gameObject.SetActive(true);
+            return;
+        }
+        else
+        {
+            currentPlanet.m_colony.CreateBuilding(E_BUILDING_TYPES.E_MINE);
+            BuildingTypeChoice.gameObject.SetActive(false);
+            PlayerManager.playerInstance.UpdateColonyInfoInSolarSystemView(currentPlanet.m_colony);
+            UpdateBuildingList();
+            UpdateColonyResourcesImage();
+        }
     }
     public void UpdateBuildingList()
     {
@@ -122,10 +139,14 @@ public class UIColonyManager : MonoBehaviour
     public void UpdateColonyResourcesImage()
     {
         Text[] texts = ColonyResources.GetComponentsInChildren<Text>();
-        texts[0].text = currentPlanet.m_colony.m_colonyResources.m_foodAmount.ToString();
-        texts[1].text = currentPlanet.m_colony.m_colonyResources.m_metalAmount.ToString();
-        texts[2].text = currentPlanet.m_colony.m_colonyResources.m_hydrogenAmount.ToString();
-        texts[3].text = currentPlanet.m_colony.m_colonyResources.m_uraniumAmount.ToString();
+        if(currentPlanet != null)
+        {
+            texts[0].text = currentPlanet.m_colony.m_colonyResources.m_foodAmount.ToString();
+            texts[1].text = currentPlanet.m_colony.m_colonyResources.m_metalAmount.ToString();
+            texts[2].text = currentPlanet.m_colony.m_colonyResources.m_hydrogenAmount.ToString();
+            texts[3].text = currentPlanet.m_colony.m_colonyResources.m_uraniumAmount.ToString();
+        }
+        
     }
 
     public void CloseColonyManager()

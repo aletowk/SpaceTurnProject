@@ -24,23 +24,36 @@ public class CColony
     public void CreateBuilding(E_BUILDING_TYPES type)
     {
         CBuilding build = new CBuilding(type);
+        build.m_parentColony = this;
         m_buildingList.Add(build);
     }
     public bool CheckResourcesToConstruct(E_BUILDING_TYPES type)
     {
         switch(type)
         {
-            // Farm :: 5 food et 5 metal
+            // Farm :: 5 metal
             case E_BUILDING_TYPES.E_FARM:
                 {
-                    if( m_colonyResources.m_foodAmount - 5 <=0 || m_colonyResources.m_metalAmount - 5 <=0 )
+                    if( m_colonyResources.m_metalAmount - 5 <=0 )
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        m_colonyResources.m_metalAmount -= 5;
+                        return true;
+                    }
+                }
+                // Mine :: 5 food
+            case E_BUILDING_TYPES.E_MINE:
+                {
+                    if (m_colonyResources.m_foodAmount - 5 <= 0 )
                     {
                         return false;
                     }
                     else
                     {
                         m_colonyResources.m_foodAmount -= 5;
-                        m_colonyResources.m_metalAmount -= 5;
                         return true;
                     }
                 }

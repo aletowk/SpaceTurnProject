@@ -20,24 +20,10 @@ public static class Constantes
         "Unknown"
     };
 
-    //public enum E_PLANET_TYPE
-    //{
-    //    E_BARREN = 0,
-    //    E_LUSH, //Earth like
-    //    E_GAS_GIANT,
-
-    //    E_NB_PLANET_TYPE
-    //}
-    //public static string[] PlanetTypesTab = new string[]
-    //{
-    //    "Barren",
-    //    "Lush",
-    //    "Unknown"
-    //};
     public static string prefab_sprite_selection_name = "Prefabs/Sprites/SelectionSprite";
     public static string[] prefab_names = { "Prefabs/LP_BlueGiantPrefab", "Prefabs/LP_YellowDwarfPrefab" };
     public static string[] prefab_planet_names = {  "Prefabs/Planets/BarrenPrefab_1",
                                                     "Prefabs/Planets/LushPrefab_1",
                                                     "Prefabs/Planets/GasGiantPrefab_1" };
-    public static string prefab_selection_circle_name = "Prefabs/UI/SelectionCirclePrefab";
+    public static string prefab_green_selection_circle_name = "Prefabs/UI/GreenSelectCirclePrefab";
 }

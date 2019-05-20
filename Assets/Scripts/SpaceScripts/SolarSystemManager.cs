@@ -42,6 +42,7 @@ public class SolarSystemManager : MonoBehaviour
                 {
                     GalaxyManager.galaxyInstance.DestroyGalaxy();
                     CreateSolarSystem();
+                    ShowPlayerColonizedPlanets();
                 }
 
             }
@@ -96,6 +97,20 @@ public class SolarSystemManager : MonoBehaviour
             return null;
     }
 
+    public void ShowPlayerColonizedPlanets()
+    {
+        // Remove Star GreenCircle
+        for(int i = 0; i < PlayerManager.playerInstance.m_playerStarsToCircle.Keys.ToList().Count;i++)
+        {
+            PlayerManager.playerInstance.m_playerStarsToCircle.Values.ToList()[i].gameObject.SetActive(false);
+        }
+        //Active planet green circles
+        for(int i = 0; i < PlayerManager.playerInstance.m_playerPlanetcolonyToPlayerCircle.Keys.ToList().Count;i++)
+        {
+            PlayerManager.playerInstance.m_playerPlanetcolonyToPlayerCircle.Values.ToList()[i].gameObject.SetActive(true);
+        }
+    }
+
     void InstanciateStar()
     {
         GameObject instance = Instantiate(Resources.Load(Constantes.prefab_names[(int)m_star.m_starType])) as GameObject;
@@ -113,5 +128,16 @@ public class SolarSystemManager : MonoBehaviour
             Destroy(go.gameObject);
         }
         solarSystemViewActive = false;
+
+        // Active Star GreenCircle
+        for (int i = 0; i < PlayerManager.playerInstance.m_playerStarsToCircle.Keys.ToList().Count; i++)
+        {
+            PlayerManager.playerInstance.m_playerStarsToCircle.Values.ToList()[i].gameObject.SetActive(true);
+        }
+        //Remove planet green circles
+        for (int i = 0; i < PlayerManager.playerInstance.m_playerPlanetcolonyToPlayerCircle.Keys.ToList().Count; i++)
+        {
+            PlayerManager.playerInstance.m_playerPlanetcolonyToPlayerCircle.Values.ToList()[i].gameObject.SetActive(false);
+        }
     }
 }

@@ -10,12 +10,12 @@ public class PlayerManager : MonoBehaviour
     public List<CStar> m_playerStarList;
     public List<CColony> m_playerColonyList;
 
-    public List<GameObject> m_playerStarsIconList;
-
     public Image m_playerColonyInfos;
     public Image m_colonyManagerImage;
-    public bool oneIconNotActive;
 
+
+    public Dictionary<CColony, GameObject> m_playerPlanetcolonyToPlayerCircle;
+    public Dictionary<CStar, GameObject> m_playerStarsToCircle;
     void OnEnable()
     {
         playerInstance = this;    
@@ -26,7 +26,10 @@ public class PlayerManager : MonoBehaviour
     {
         m_playerStarList = new List<CStar>();
         m_playerColonyList = new List<CColony>();
-        m_playerStarsIconList = new List<GameObject>();
+
+        m_playerPlanetcolonyToPlayerCircle = new Dictionary<CColony, GameObject>();
+        m_playerStarsToCircle = new Dictionary<CStar, GameObject>();
+
         m_playerColonyInfos.gameObject.SetActive(false);
         m_colonyManagerImage.gameObject.SetActive(false);
     }
@@ -58,16 +61,6 @@ public class PlayerManager : MonoBehaviour
                 {
                     m_playerColonyInfos.gameObject.SetActive(false);
                 }
-            }
-
-            // update player star icons
-            if (oneIconNotActive == true)
-            {
-                for (int i = 0; i < m_playerStarsIconList.Count; i++)
-                {
-                    m_playerStarsIconList[i].SetActive(true);
-                }
-                oneIconNotActive = false;
             }
         }// Update in solar system view
         else
@@ -175,6 +168,20 @@ public class PlayerManager : MonoBehaviour
         return null;
     }
     
+
+    // Compute player colony tasks:
+    public void ComputePlayerBuildingsTask()
+    {
+        for(int colIndex = 0; colIndex < m_playerColonyList.Count; colIndex++)
+        {
+
+            for(int buildIndex = 0; buildIndex < m_playerColonyList[colIndex].m_buildingList.Count; buildIndex++)
+            {
+                m_playerColonyList[colIndex].m_buildingList[buildIndex].ComputeBuildingTask();
+            }
+
+        }
+    }
 
 
 }

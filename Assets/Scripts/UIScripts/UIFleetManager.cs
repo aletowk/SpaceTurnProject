@@ -9,7 +9,9 @@ public class UIFleetManager : MonoBehaviour
 
 
     public Button CloseButton;
+    public ScrollRect scrollRect;
 
+    public RectTransform viewPortContent;
 
     void OnEnable()
     {
@@ -26,15 +28,23 @@ public class UIFleetManager : MonoBehaviour
         CloseButton = buttonList[0];
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    public void UpdateFleetManager()
     {
-        
+        for(int i = 0; i < PlayerManager.playerInstance.m_playerFleet.m_shipList.Count;i++)
+        {
+            GameObject shipImg = Instantiate(Resources.Load("Prefabs/UI/ShipUI/ShipImage")) as GameObject;
+            Image img = shipImg.GetComponentInChildren<Image>();
+            shipImg.transform.SetParent(viewPortContent);
+            shipImg.transform.position = new Vector3(50,-50*(i+1));
+        }
     }
+
 
     public void OpenFleetManager()
     {
         this.gameObject.SetActive(true);
+        UpdateFleetManager();
     }
     public void CloseFleetManager()
     {

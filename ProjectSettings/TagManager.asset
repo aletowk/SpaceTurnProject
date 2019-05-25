@@ -8,6 +8,7 @@ TagManager:
   - Green
   - Blue
   - PlayerManagerTag
+  - FleetScrollView
   layers:
   - Default
   - TransparentFX

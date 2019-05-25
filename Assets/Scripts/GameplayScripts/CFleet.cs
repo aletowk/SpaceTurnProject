@@ -10,8 +10,9 @@ public class CFleet
 	Dictionary<CShip, GameObject> shipToGameObject;
 	public List<CShip> m_shipList;
 
-	public CFleet()
+	public CFleet(E_FACTION faction)
 	{
+        m_parentFaction = faction;
 		m_shipList = new List<CShip>();
 		shipToGameObject = new Dictionary<CShip,GameObject>();
 	}

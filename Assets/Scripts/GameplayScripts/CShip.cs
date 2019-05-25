@@ -188,11 +188,12 @@ public class CShip
 		m_shipLevel = 1;
 
 		m_weaponList = new List<CWeapon>();
-		m_shipStats.weaponAttachement = 0;
-		m_equipmentList = new List<CEquipment>();
-		m_shipStats.equipmentAttachement = 0;
 
-		m_shipStats = new CShipStats(type);
+		m_equipmentList = new List<CEquipment>();
+
+        m_shipGameObject = null;
+
+        m_shipStats = new CShipStats(type);
 	}
 
 	public void AddWeapon(E_WEAPON_TYPE type)

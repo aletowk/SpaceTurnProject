@@ -149,6 +149,15 @@ public class UIColonyManager : MonoBehaviour
         
     }
 
+
+    public void BuildShip()
+    {
+        CShip ship = new CShip(PlayerManager.playerInstance.m_playerFleet.m_shipList.Count, E_SHIP_TYPE.Figther);
+        PlayerManager.playerInstance.m_playerFleet.AddShip(ship);
+        Debug.Log("BuildShip : " + ship.m_shipName.ToString());
+    }
+
+
     public void CloseColonyManager()
     {
         currentPlanet = null;

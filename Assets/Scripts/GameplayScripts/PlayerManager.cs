@@ -16,6 +16,10 @@ public class PlayerManager : MonoBehaviour
 
     public Dictionary<CColony, GameObject> m_playerPlanetcolonyToPlayerCircle;
     public Dictionary<CStar, GameObject> m_playerStarsToCircle;
+
+
+    public CFleet m_playerFleet;
+
     void OnEnable()
     {
         playerInstance = this;    
@@ -32,6 +36,8 @@ public class PlayerManager : MonoBehaviour
 
         m_playerColonyInfos.gameObject.SetActive(false);
         m_colonyManagerImage.gameObject.SetActive(false);
+
+        m_playerFleet = new CFleet(E_FACTION.E_PLAYER);
     }
 
     // Update is called once per frame

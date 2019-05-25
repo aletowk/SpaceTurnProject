@@ -200,16 +200,16 @@ public class GalaxyManager : MonoBehaviour
         PlayerManager.playerInstance.m_playerColonyList.Add(startColony);
         selectStartPlanet.m_colony = startColony;
 
-        GameObject instance = Instantiate(Resources.Load(Constantes.prefab_green_selection_circle_name)) as GameObject;
+        GameObject instance = Instantiate(Resources.Load(Constantes.prefab_sprite_green_circle_name)) as GameObject;
         instance.transform.SetParent(PlayerManager.playerInstance.gameObject.transform);
-        instance.transform.localScale *= 2f;
+        instance.transform.localScale *= 3f;
         instance.transform.position = star.m_starPosition;
         //store star and green circle game object in dict
         PlayerManager.playerInstance.m_playerStarsToCircle.Add(star, instance);
 
-        GameObject instanceColonyGreenCircle = Instantiate(Resources.Load(Constantes.prefab_green_selection_circle_name)) as GameObject;
+        GameObject instanceColonyGreenCircle = Instantiate(Resources.Load(Constantes.prefab_sprite_green_circle_name)) as GameObject;
         instanceColonyGreenCircle.transform.SetParent(PlayerManager.playerInstance.gameObject.transform);
-        instanceColonyGreenCircle.transform.localScale *= 2f;
+        instanceColonyGreenCircle.transform.localScale *= 3f;
         instanceColonyGreenCircle.transform.position = startColony.m_parentPlanet.m_planetPosition;
         instanceColonyGreenCircle.gameObject.SetActive(false); // will be done in solar system view
         PlayerManager.playerInstance.m_playerPlanetcolonyToPlayerCircle.Add(startColony, instanceColonyGreenCircle);

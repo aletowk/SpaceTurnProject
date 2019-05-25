@@ -38,6 +38,8 @@ public class CameraController : MonoBehaviour
         float y = -Input.GetAxis("Mouse ScrollWheel")*scrollWheelSpeed;
         //float yaw = Input.GetAxisRaw("Yaw");
 
+
+        //Translations
         if (Input.GetKey(KeyCode.Space))
         {
             y = 1f;
@@ -45,7 +47,6 @@ public class CameraController : MonoBehaviour
         {
             y = -1f;
         }
-
         if (x != 0f  || z != 0f)
         {
             Vector3 frontDir = transform.forward;
@@ -57,16 +58,22 @@ public class CameraController : MonoBehaviour
         }
         if (y != 0f)
             transform.position += Vector3.down * y * cameraSpeed * Time.deltaTime;
-        //if(z!=0f)
-        //{
-        //    Ray dir = Camera.main.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2));
-        //    transform.Translate(dir.direction * z * cameraSpeed * Time.deltaTime);
-        //}
+        
+
+        //Rotations
         if (Input.GetMouseButton(2))
         {
             pitch -= Input.GetAxis("Mouse Y")* speedH;
             yaw += Input.GetAxis("Mouse X") * speedV;
             transform.eulerAngles = new Vector3(pitch, yaw, 0f);
+        }else if(Input.GetKeyDown(KeyCode.A))
+        {
+            yaw -= speedV;
+            transform.eulerAngles += new Vector3(0f, yaw, 0f);
+        }else if(Input.GetKeyDown(KeyCode.E))
+        {
+            yaw += speedV;
+            transform.eulerAngles += new Vector3(0f, yaw, 0f);
         }
     }
 }

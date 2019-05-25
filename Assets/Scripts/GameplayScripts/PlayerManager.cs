@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
 
     public Image m_playerColonyInfos;
     public Image m_colonyManagerImage;
-
+    public Image m_fleetManagerImage;
 
     public Dictionary<CColony, GameObject> m_playerPlanetcolonyToPlayerCircle;
     public Dictionary<CStar, GameObject> m_playerStarsToCircle;
@@ -182,6 +182,9 @@ public class PlayerManager : MonoBehaviour
 
         }
     }
+    public void UpdateFleetManagerImage()
+    {
 
+    }
 
 }

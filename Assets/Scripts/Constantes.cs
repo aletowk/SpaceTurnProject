@@ -21,6 +21,7 @@ public static class Constantes
     };
 
     public static string prefab_sprite_selection_name = "Prefabs/Sprites/SelectionSprite";
+    public static string prefab_sprite_green_circle_name = "Prefabs/UI/GreenCircle";
     public static string[] prefab_names = { "Prefabs/LP_BlueGiantPrefab", "Prefabs/LP_YellowDwarfPrefab" };
     public static string[] prefab_planet_names = {  "Prefabs/Planets/BarrenPrefab_1",
                                                     "Prefabs/Planets/LushPrefab_1",
